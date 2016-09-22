@@ -78,12 +78,8 @@ PRODUCT_COPY_FILES += \
 
 # Legacy RIL
 PRODUCT_PACKAGES += \
-    libsamsung_symbols \
-    ril-wrapper
-    
-# Radio and Telephony
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.ril.config=setPrefNwTypeOnUnsolConnected
+   libsamsung_symbols \
+   libsecril-shim
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -212,8 +208,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.media.legacy-drm=1 \
     wifi.interface=wlan0 \
-    ro.telephony.ril_class=SamsungExynos3RIL \
-    ro.telephony.ril.config=icccardstatus,datacall,signalstrength,facilitylock \
     mobiledata.interfaces=pdp0,eth0,gprs,ppp0,rmnet \
     ro.bq.gpu_to_cpu_unsupported=1 \
     ro.ril.hsxpa=1 \
