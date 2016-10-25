@@ -30,17 +30,18 @@ SYSTEM_SIZE='943718400';
 
 # write logs to /tmp
 set_log() {
-    /tmp/busybox mkdir -p /tmp/omni;
-    /tmp/busybox rm -rf /tmp/omni/"${1}";
-    exec >> /tmp/omni/"${1}" 2>&1;
+    /tmp/busybox mkdir -p /sdcard/aries;
+    /tmp/busybox rm -rf /sdcard/aries/"${1}";
+    exec >> /sdcard/aries/"${1}" 2>&1;
 }
 
-# restore logs from /tmp
+# restore logs from /sdcard/aries
 restore_log() {
-    local omni_log_path="${2}"/omni/log;
-    if /tmp/busybox test -e /tmp/omni/"${1}" ; then
-        mkdir -p "${omni_log_path}";
-        /tmp/busybox cp /tmp/omni/"${1}" "${omni_log_path}"/"${1}";
+    local aries_log_path="${2}"/aries/log;
+    if /tmp/busybox test -e /sdcard/aries/"${1}" ; then
+        mkdir -p "${aries_log_path}";
+        /tmp/busybox cp /sdcard/aries/"${1}" "${aries_log_path}"/"${1}";
+        /tmp/busybox rm -rf /sdcard/aries
     fi
 }
 
@@ -170,8 +171,8 @@ format_partitions() {
     /lvm/sbin/lvm lvcreate -l 100%FREE -n userdata lvpool;
 
     # format partitions
-    /tmp/make_f2fs -b 4096 -g 32768 -i 7680 -I 256 -a /system /dev/lvpool/system;
-    /tmp/make_f2fs -b 4096 -g 32768 -i 8192 -I 256 -a /data /dev/lvpool/userdata;
+    /tmp/make_ext4fs -b 4096 -g 32768 -i 7680 -I 256 -a /system /dev/lvpool/system;
+    /tmp/make_ext4fs -b 4096 -g 32768 -i 8192 -I 256 -a /data /dev/lvpool/userdata;
 }
 
 # setup lvm partitions
@@ -201,20 +202,20 @@ backup_efs() {
         check_mount /efs "${1}" "${2}";
 
         # create a backup of efs
-        if /tmp/busybox test -e "${3}"/omni/backup/efs ; then
-            /tmp/busybox mv "${3}"/omni/backup/efs "${3}"/omni/backup/efs-$$;
+        if /tmp/busybox test -e "${3}"/aries/backup/efs ; then
+            /tmp/busybox mv "${3}"/aries/backup/efs "${3}"/aries/backup/efs-$$;
         fi
-        /tmp/busybox rm -rf "${3}"/omni/backup/efs;
+        /tmp/busybox rm -rf "${3}"/aries/backup/efs;
 
-        /tmp/busybox mkdir -p "${3}"/omni/backup/efs;
-        /tmp/busybox cp -R /efs/ "${3}"/omni/backup;
+        /tmp/busybox mkdir -p "${3}"/aries/backup/efs;
+        /tmp/busybox cp -R /efs/ "${3}"/aries/backup;
     fi
 }
 
 # restore /efs partition
 restore_efs() {
     if ${IS_GSM} ; then
-        if /tmp/busybox test -e /sdcard/omni/backup/efs/nv_data.bin ; then
+        if /tmp/busybox test -e /sdcard/aries/backup/efs/nv_data.bin ; then
             /tmp/busybox umount -l /efs;
             /tmp/erase_image efs;
             /tmp/busybox mkdir -p /efs;
@@ -226,7 +227,7 @@ restore_efs() {
                 fi
             fi
 
-            /tmp/busybox cp -R /sdcard/omni/backup/efs /;
+            /tmp/busybox cp -R /sdcard/aries/backup/efs /;
             /tmp/busybox umount -l /efs;
         else
             echo "nv_data.bin not found";
@@ -289,7 +290,7 @@ if /tmp/busybox test -e /dev/block/bml7 ; then
 # check if we're running on a bml
 
     # we're running on a bml device
-    # everything is logged into /tmp/omni/bml.log
+    # everything is logged into /sdcard/aries/bml.log
     set_log bml.log;
 
     # send a warning to user
@@ -301,8 +302,8 @@ if /tmp/busybox test -e /dev/block/bml7 ; then
     # backup efs
     backup_efs /dev/block/stl3 rfs /mnt/sdcard;
 
-    # write the package path to sdcard omni.cfg
-    echo "${UPDATE_PACKAGE}" > /mnt/sdcard/omni.cfg;
+    # write the package path to sdcard aries.cfg
+    echo "${UPDATE_PACKAGE}" > /mnt/sdcard/aries.cfg;
 
     if $IS_GSM ; then
         # Copy the recovery ramdisk to the SD
@@ -327,7 +328,7 @@ elif [ "$(/tmp/busybox cat /sys/class/mtd/mtd2/size)" != "${MTD_SIZE}" ] || \
 # Install process
 # we're running on a mtd (old) device
 
-    # everything is logged /tmp/omni_mtd_old.log
+    # everything is logged /sdcard/aries_mtd_old.log
     set_log mtd_old.log;
 
     # send a warning to user
@@ -336,8 +337,8 @@ elif [ "$(/tmp/busybox cat /sys/class/mtd/mtd2/size)" != "${MTD_SIZE}" ] || \
     # make sure sdcard is mounted
     check_mount /sdcard $SD_PART vfat
 
-    # write the package path to sdcard omni.cfg
-    echo "${UPDATE_PACKAGE}" > /sdcard/omni.cfg;
+    # write the package path to sdcard aries.cfg
+    echo "${UPDATE_PACKAGE}" > /sdcard/aries.cfg;
 
     if $IS_GSM ; then
         copy_ramdisks;
@@ -362,7 +363,7 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
 # Install process
 # we're running on a mtd (current) device
 
-    # everything is logged into /tmp/omni/mtd.log
+    # everything is logged into /sdcard/aries/mtd.log
     set_log mtd.log;
 
     # restore modem.bin
@@ -385,7 +386,7 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
     # check sdcard
     check_mount /mnt/sdcard "${SD_PART}" vfat;
 
-    if ! /tmp/busybox test -e /sdcard/omni.cfg ; then
+    if ! /tmp/busybox test -e /sdcard/aries.cfg ; then
         # unmount system and data (recovery seems to expect system to be unmounted)
         /tmp/busybox umount -l /system;
         /tmp/busybox umount -l /data;
@@ -405,7 +406,7 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
     fi
 
     # prevent loops
-    /tmp/busybox rm -fr /sdcard/omni.cfg;
+    /tmp/busybox rm -fr /sdcard/aries.cfg;
 
     # remove the recovery ramdisk from the SD
     /tmp/busybox rm -f /sdcard/ramdisk-recovery.img

@@ -47,6 +47,8 @@ MALLOC_SVELTE := true
 TARGET_NEEDS_BIONIC_PRELINK_SUPPORT := true
 TARGET_ENABLE_NON_PIE_SUPPORT := true
 LIBART_IMG_BASE := 0x30000000
+TARGET_USERIMAGES_USE_YAFFS := true
+TARGET_NEEDS_PLATFORM_TEXTRELS := true
 
 # Use longer timeouts for slow CPU
 TARGET_NEEDS_LONG_TIMEOUTS := true
@@ -118,7 +120,7 @@ WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
 
 # Bluetooth
-BOARD_BLUEDROID_VENDOR_CONF := device/samsung/aries-common/config/libbt_vndcfg.txt
+BOARD_CUSTOM_BT_CONFIG := device/samsung/aries-common/config/libbt_vndcfg.txt
 
 # Vold
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true

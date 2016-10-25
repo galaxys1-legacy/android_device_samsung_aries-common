@@ -66,6 +66,7 @@ PRODUCT_COPY_FILES += \
 
 # Prebuilt static utilities (for updater.sh)
 PRODUCT_COPY_FILES += \
+    device/samsung/aries-common/utilities/busybox:recovery/root/sbin/busybox-M \
     device/samsung/aries-common/utilities/bml_over_mtd:utilities/bml_over_mtd \
     device/samsung/aries-common/utilities/busybox:utilities/busybox \
     device/samsung/aries-common/utilities/erase_image:utilities/erase_image \

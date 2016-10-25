@@ -2,8 +2,11 @@ import usb.rc # Renamed init.aries.usb.rc, we can't use init*.rc because the bui
 
 on init
 
-    export PATH /sbin
+    export PATH /sbin:/system/bin:/system/xbin
     export LD_LIBRARY_PATH .:/sbin
+    
+    rm /sbin/busybox
+    symlink /sbin/busybox-M /sbin/busybox
 
 on fs
 
