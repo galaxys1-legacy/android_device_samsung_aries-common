@@ -1,8 +1,4 @@
 ###########################
 # OmniROM Aries sepolicy
 #
-allow ueventd sysfs_writable:file { getattr open read write };
-allow ueventd lvm:process { sigchld };
-
-allow ueventd sysfs_dspmanager:file { read open getattr write };
-allow ueventd kernel:system module_request;
+allow ueventd sysfs_writable:file { open write };

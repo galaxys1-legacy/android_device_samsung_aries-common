@@ -1,12 +1,6 @@
 ###########################
 # OmniROM Aries sepolicy
 #
-# We shifted /data/data stuff around
-/data/data2/.*                                                          u:object_r:app_data_file:s0
-/datadata(/.*)?                                                         u:object_r:datadata_file:s0
-/data/data2/com.android.providers.downloads/cache                       u:object_r:download_file:s0
-/data/download(/.*)?                                                    u:object_r:backup_data_file:s0
-
 # RIL
 /dev/s3c2410_serial3                                                    u:object_r:radio_device:s0
 /dev/onedram                                                            u:object_r:radio_device:s0
@@ -17,6 +11,7 @@
 /dev/mtd/mtd5ro                                                         u:object_r:radio_device:s0
 /dev/block/mtdblock5                                                    u:object_r:radio_device:s0
 /radio(/.*)?                                                            u:object_r:rild_file:s0
+/data/.nvmac.info                                                       u:object_r:rild_file:s0
 
 # camera
 /dev/video0                                                             u:object_r:camera_device:s0
@@ -41,12 +36,9 @@
 # GPS
 /dev/s3c2410_serial1                                                    u:object_r:gps_device:s0
 
-# Bluetooth
+# Bdaddr
 /system/bin/bdaddr_read                                                 u:object_r:bdaddr_read_exec:s0
 /data/bdaddr                                                            u:object_r:bdaddr_read_data_file:s0
-
-# WiFi
-/dev/rfkill                                                      u:object_r:rfkill_device:s0
 
 # Advanced settings
 /sys/devices/virtual/mdnieset_ui/switch_mdnieset_ui/mdnieset_ui_file_cmd u:object_r:sysfs_writable:s0
@@ -86,6 +78,3 @@
 # LVM
 /dev/mapper/lvpool-(.*)                                                 u:object_r:block_device:s0
 /lvm/sbin(/.*)?                                                         u:object_r:rootfs:s0
-
-# zRam
-/dev/block/zram0                                                        u:object_r:swap_block_device:s0

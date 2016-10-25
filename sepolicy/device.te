@@ -1,5 +1,4 @@
 ###########################
 # OmniROM Aries sepolicy
 #
-type rfkill_device, dev_type;
 type mfc_device, dev_type;

@@ -1,89 +1,14 @@
 ###########################
 # OmniROM Aries sepolicy
 #
-# unconfined_domain(init)
-# allow init rootfs:file execute_no_trans;
 
-# allow init rootfs:file unlink;
-
-# allow init kmem_device:chr_file getattr;
-# allow init rootfs:file create;
-
-allow init self:capability { sys_module };
-allow init self:process { execmem setcurrent };
-
-# allow init lvm_placeholder:process { dyntransition };
-
-# allow init kmem_device:chr_file create_file_perms;
-
-allow init ashmem_device:chr_file { execute };
-
-allow init device:blk_file { create setattr relabelfrom relabelto };
-
-allow init block_device:blk_file { relabelfrom relabelto };
-
-allow init kernel:system { syslog_read };
-# allow init kernel:security { setenforce };
-
-allow init app_data_file:file { create_file_perms relabelfrom relabelto };
-allow init app_data_file:dir { create_dir_perms relabelfrom relabelto };
-# allow init app_data_file:lnk_file { create_file_perms relabelfrom relabelto };
-
-allow init datadata_file:file { create_file_perms relabelfrom relabelto };
-allow init datadata_file:dir { create_dir_perms relabelfrom relabelto };
-allow init datadata_file:lnk_file { create_file_perms relabelfrom relabelto };
-
-allow init radio_device:file { create_file_perms relabelfrom relabelto };
-allow init radio_device:dir { create_dir_perms relabelfrom relabelto };
-allow init radio_device:lnk_file { create_file_perms relabelto relabelto };
-
-allow init vfat:file { create_file_perms relabelfrom relabelto };
-allow init vfat:dir { create_dir_perms relabelfrom relabelto };
-allow init vfat:lnk_file { create_file_perms relabelfrom relabelto };
-
-allow init shell_data_file:file { create_file_perms relabelfrom relabelto };
-allow init shell_data_file:dir { create_dir_perms relabelfrom relabelto };
-# allow init shell_data_file:lnk_file { create_file_perms relabelfrom relabelto };
-
-allow init init_tmpfs:file { create_file_perms relabelfrom relabelto };
-allow init init_tmpfs:dir { create_dir_perms relabelfrom relabelto };
-allow init init_tmpfs:lnk_file { create_file_perms relabelfrom relabelto };
-
-allow init shell_data_file:file { create_file_perms relabelfrom relabelto };
-allow init shell_data_file:dir { create_dir_perms relabelfrom relabelto };
-# allow init shell_data_file:lnk_file { create_file_perms relabelfrom relabelto };
-
-allow init untrusted_app:process { signal };
-allow init adb_device:chr_file getattr;
-allow init app_data_file:lnk_file { getattr setattr };
-allow init audio_device:chr_file getattr;
-allow init block_device:blk_file write;
-allow init camera_device:chr_file getattr;
-allow init device:chr_file create;
-allow init full_device:chr_file getattr;
-allow init fuse_device:chr_file getattr;
-allow init gps_device:chr_file getattr;
-allow init gpu_device:chr_file getattr;
-allow init graphics_device:chr_file getattr;
-allow init hci_attach_dev:chr_file getattr;
-allow init input_device:chr_file getattr;
-allow init kernel:system module_request;
-# allow init kmem_device:chr_file getattr;
-allow init kmsg_device:chr_file getattr;
-allow init mtd_device:chr_file getattr;
-allow init mtp_device:chr_file getattr;
-allow init ppp_device:chr_file getattr;
-allow init qtaguid_device:chr_file getattr;
-allow init radio_device:chr_file getattr;
-allow init rootfs:file { create unlink execute_no_trans append };
-allow init rtc_device:chr_file getattr;
-allow init sensors_device:chr_file getattr;
 allow init sysfs_dspmanager:file getattr;
-# allow init system_file:file execute_no_trans;
-allow init tmpfs:lnk_file create;
-allow init tun_device:chr_file getattr;
-allow init uhid_device:chr_file getattr;
-allow init usbaccessory_device:chr_file getattr;
-allow init vcs_device:chr_file getattr;
-allow init video_device:chr_file getattr;
 allow init sysfs_writable:file getattr;
+allow init tmpfs:lnk_file create;
+
+allow init app_data_file:dir { relabelfrom read open };
+allow init app_data_file:file { relabelfrom getattr };
+allow init app_data_file:lnk_file { relabelfrom getattr };
+allow init shell_data_file:dir relabelfrom;
+
+allow init rild:process noatsecure;
