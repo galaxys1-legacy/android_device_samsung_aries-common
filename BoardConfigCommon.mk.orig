@@ -22,8 +22,12 @@ BOARD_USES_GENERIC_AUDIO := false
 AUDIO_FEATURE_ENABLED_INCALL_MUSIC := false
 AUDIO_FEATURE_ENABLED_COMPRESS_VOIP := false
 
+<<<<<<< HEAD
+BOARD_USES_LIBSECRIL_STUB := true
 
 # Disable SELinux
+=======
+>>>>>>> 50ed85a... aries-common: Add libsecril-shim
 TARGET_ARCH := arm
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
@@ -46,14 +50,25 @@ MALLOC_SVELTE := true
 TARGET_ENABLE_NON_PIE_SUPPORT := true
 LIBART_IMG_BASE := 0x30000000
 TARGET_USERIMAGES_USE_YAFFS := true
-TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
+TARGET_NEEDS_PLATFORM_TEXTRELS := true
 
+# Use longer timeouts for slow CPU
+TARGET_NEEDS_LONG_TIMEOUTS := true
+
+<<<<<<< HEAD
 # Don't include live wallpapers, they take too much cpu and ram plus space
 TARGET_EXCLUDE_LIVEWALLPAPERS := true
 
 # CMHW
 BOARD_HARDWARE_CLASS := device/samsung/aries-common/cmhw
 
+# RIL
+BOARD_RIL_CLASS := ../../../device/samsung/aries-common/ril/
+
+BOARD_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
+
+=======
+>>>>>>> 50ed85a... aries-common: Add libsecril-shim
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
@@ -79,11 +94,6 @@ BOARD_CAMERA_HAVE_ISO := true
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
-
-# RIL
-BOARD_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
-TARGET_NEEDS_ROOT_RIL_INIT := true
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/aries-common/include
 
 # Video Devices
 BOARD_V4L2_DEVICE := /dev/video1
@@ -114,6 +124,11 @@ WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
 
 # Bluetooth
 BOARD_CUSTOM_BT_CONFIG := device/samsung/aries-common/config/libbt_vndcfg.txt
+
+# RIL
+BOARD_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
+TARGET_NEEDS_ROOT_RIL_INIT := true
+TARGET_SPECIFIC_HEADER_PATH := device/samsung/aries-common/include
 
 # Vold
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true

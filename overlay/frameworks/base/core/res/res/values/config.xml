@@ -200,7 +200,7 @@
     <!-- Device configuration setting the /proc/sys/vm/extra_free_kbytes tunable
          in the kernel. Default is 3 full-screen 32 bpp buffers, i.e. 4500KB
          on Galaxy S. Let's double this value. -->
-    <integer name="config_extraFreeKbytesAbsolute">9000</integer>
+    <integer name="config_extraFreeKbytesAbsolute">13500</integer>
 
     <!-- Enable multi user interface -->
     <bool name="config_enableMultiUserUI">true</bool>
@@ -254,6 +254,7 @@
     <integer name="config_deviceHardwareWakeKeys">65</integer>
     
        <!-- Boolean to enable stk functionality on Samsung phones -->
+     <bool name="config_samsung_stk">true</bool>
 
     <!-- Global action menu -->
     <string-array translatable="false" name="config_globalActionsList">
@@ -278,5 +279,7 @@
          correctly use them when installed on your device.  Otherwise, keep this disabled
          so that applications can still use their own mechanisms. -->
     <bool name="config_enableAutoPowerModes">true</bool>
+    
+    <integer name="config_lowMemoryKillerMinFreeKbytesAdjust">1024</integer>
     
 </resources>
