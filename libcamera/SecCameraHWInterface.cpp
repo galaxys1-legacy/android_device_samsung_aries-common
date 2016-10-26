@@ -24,7 +24,6 @@
 #include "SecCameraHWInterface.h"
 #include "SecCameraUtils.h"
 
-#include <cutils/native_handle.h>
 #include <utils/threads.h>
 #include <fcntl.h>
 #include <sys/mman.h>
@@ -59,8 +58,11 @@
 namespace android {
 
 struct addrs {
-    MetadataBufferType type;
-    native_handle_t* pHandle;
+    uint32_t type;  // make sure that this is 4 byte.
+    unsigned int addr_y;
+    unsigned int addr_cbcr;
+    unsigned int buf_index;
+    unsigned int reserved;
 };
 
 struct addrs_cap {
@@ -639,14 +641,13 @@ callbacks:
             return UNKNOWN_ERROR;
         }
 
+
         addrs = (struct addrs *)mRecordHeap->data;
 
-        addrs[index].type = kMetadataBufferTypeNativeHandleSource;
-
-        addrs[index].pHandle = native_handle_create(0 /*numFds*/, 3 /*numInts*/);
-        addrs[index].pHandle->data[0] = phyYAddr;
-        addrs[index].pHandle->data[1] = phyCAddr;
-        addrs[index].pHandle->data[2] = index;
+        addrs[index].type   = kMetadataBufferTypeCameraSource;
+        addrs[index].addr_y = phyYAddr;
+        addrs[index].addr_cbcr = phyCAddr;
+        addrs[index].buf_index = index;
 
         // Notify the client of a new frame.
         if (mMsgEnabled & CAMERA_MSG_VIDEO_FRAME) {
@@ -821,9 +822,7 @@ bool CameraHardwareSec::recordingEnabled()
 void CameraHardwareSec::releaseRecordingFrame(const void *opaque)
 {
     struct addrs *addrs = (struct addrs *)opaque;
-    mSecCamera->releaseRecordFrame(addrs->pHandle->data[2]);
-    native_handle_close(addrs->pHandle);
-    native_handle_delete(addrs->pHandle);
+    mSecCamera->releaseRecordFrame(addrs->buf_index);
 }
 
 // ---------------------------------------------------------------------------
