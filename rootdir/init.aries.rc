@@ -16,7 +16,7 @@ on init
 
     # for backwards compatibility
     # symlink /sdcard /mnt/sdcard
-    symlink /sdcard /storage/sdcard
+    symlink /sdcard /storage/sdcard0
 
 
 on boot
