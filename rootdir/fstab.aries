@@ -18,3 +18,6 @@ radio                       /radio              mtd         defaults            
 
 /devices/platform/s3c-sdhci.0/mmc_host/mmc0/*/mmcblk0 auto auto defaults voldmanaged=sdcard0:1,noemulatedsd
 /devices/platform/s3c-sdhci.2/mmc_host/mmc2* auto auto defaults voldmanaged=sdcard1:auto,encryptable=userdata
+
+# zRAM
+/dev/block/zram0            none                swap        defaults                                            zramsize=134217728,zramstreams=2
