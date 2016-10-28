@@ -256,6 +256,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dexopt-data-only=1
 
+# sdcardfs
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sdcardfs.enable=true
+
 # SELinux
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.build.selinux=1
