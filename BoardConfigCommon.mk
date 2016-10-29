@@ -183,7 +183,7 @@ TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 BOARD_CUSTOM_VSYNC_IOCTL := true
 
 # Required for TV out
-COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
+# COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
 # Include aries specific stuff
 -include device/samsung/aries-common/Android.mk
