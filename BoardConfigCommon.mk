@@ -157,6 +157,9 @@ BOARD_HAS_BLN := true
 # Include an expanded selection of fonts
  EXTENDED_FONT_FOOTPRINT := true
 
+# SkTextBox for libtvout
+BOARD_USES_SKTEXTBOX := true
+
 # Hardware rendering
 USE_OPENGL_RENDERER := true
 BOARD_EGL_SYSTEMUI_PBSIZE_HACK := true
@@ -178,6 +181,9 @@ TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # hwcomposer: custom vsync ioctl
 BOARD_CUSTOM_VSYNC_IOCTL := true
+
+# Required for TV out
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
 # Include aries specific stuff
 -include device/samsung/aries-common/Android.mk
