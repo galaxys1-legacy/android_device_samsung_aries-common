@@ -193,10 +193,17 @@ PRODUCT_COPY_FILES += \
 
 # The OpenGL ES API level that is natively supported by this device.
 # This is a 16.16 fixed point number
-PRODUCT_PROPERTY_OVERRIDES := \
-    ro.opengles.version=131072 \
+PRODUCT_PROPERTY_OVERRIDES += \
     debug.hwui.render_dirty_regions=false \
+    ro.hwui.r_buffer_cache_size=1 \
+    ro.hwui.layer_cache_size=8 \
+    ro.hwui.path_cache_size=2 \
+    ro.hwui.drop_shadow_cache_size=1 \
+    ro.hwui.shape_cache_size=0.5 \
+    ro.hwui.texture_cache_size=12 \
+    ro.opengles.version=131072 \
     ro.zygote.disable_gl_preload=true
+
 
 # Support for Browser's saved page feature. This allows
 # for pages saved on previous versions of the OS to be
@@ -226,13 +233,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # ART
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dex2oat-Xms=8m \
-    dalvik.vm.dex2oat-Xmx=96m \
-    dalvik.vm.image-dex2oat-Xms=48m \
-    dalvik.vm.image-dex2oat-Xmx=48m \
-    dalvik.vm.dex2oat-flags=--no-watch-dog \
-    dalvik.vm.dex2oat-filter=interpret-only \
-    dalvik.vm.image-dex2oat-filter=speed
+    dalvik.vm.dex2oat-flags=--no-watch-dog
 
 # Force dex2oat to not use swap file
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -253,10 +254,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.google.locationfeatures=1 \
     ro.com.google.networklocation=1
 
-# We have sacrificed /cache for a larger /system, so it's not large enough for dalvik cache
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dexopt-data-only=1
-
 # sdcardfs
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sdcardfs.enable=true
@@ -273,13 +270,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.kernel.android.checkjni=0 \
     dalvik.vm.checkjni=false
-
-# ART
-PRODUCT_DEX_PREOPT_DEFAULT_FLAGS := \
-    --compiler-filter=interpret-only
-
-# we have enough storage space to hold precise GC data
-PRODUCT_TAGS += dalvik.gc.type-precise
 
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 
