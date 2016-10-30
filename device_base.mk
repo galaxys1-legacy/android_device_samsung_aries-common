@@ -221,10 +221,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.ril.hsxpa=1 \
     ro.ril.gprsclass=10 \
     ro.adb.qemud=1 \
-    ro.ril.enable.managed.roaming=1 \
-    ro.ril.emc.mode=2 \
-    ro.phone_storage=1 \
-    ro.additionalmounts=/storage/sdcard1 \
     ro.config.low_ram=true \
     ro.sys.fw.bg_apps_limit=16 \
     ro.config.max_starting_bg=10 \
@@ -269,9 +265,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.kernel.android.checkjni=0 \
     dalvik.vm.checkjni=false
+    
+# Strict mode disabled
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.strictmode.disable=1 \
+    persist.sys.strictmode.visual=0
 
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
-
-$(call add-product-dex-preopt-module-config,services,--compiler-filter=speed)
 
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
