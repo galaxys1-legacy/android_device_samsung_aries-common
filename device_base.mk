@@ -249,10 +249,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.google.locationfeatures=1 \
     ro.com.google.networklocation=1
 
-# sdcardfs
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sdcardfs.enable=true
-
 # SELinux
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.build.selinux=1
