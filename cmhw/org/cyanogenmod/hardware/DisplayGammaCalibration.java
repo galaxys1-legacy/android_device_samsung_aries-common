@@ -21,9 +21,9 @@ import org.cyanogenmod.internal.util.FileUtils;
 
 public class DisplayGammaCalibration {
     private static final String[] GAMMA_FILE_PATH = new String[] {
-        "/sys/devices/virtual/misc/voodoo_color/red_v1_offset",
-        "/sys/devices/virtual/misc/voodoo_color/green_v1_offset",
-        "/sys/devices/virtual/misc/voodoo_color/blue_v1_offset"
+        "/sys/devices/virtual/misc/color_tuning/red_v1_offset",
+        "/sys/devices/virtual/misc/color_tuning/green_v1_offset",
+        "/sys/devices/virtual/misc/color_tuning/blue_v1_offset"
     };
 
     public static boolean isSupported() {

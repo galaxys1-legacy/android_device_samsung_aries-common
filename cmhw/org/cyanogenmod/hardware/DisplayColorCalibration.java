@@ -22,9 +22,9 @@ import org.cyanogenmod.internal.util.FileUtils;
 public class DisplayColorCalibration {
 
     private static final String[] COLOR_FILE = new String[] {
-        "/sys/devices/virtual/misc/voodoo_color/red_multiplier",
-        "/sys/devices/virtual/misc/voodoo_color/green_multiplier",
-        "/sys/devices/virtual/misc/voodoo_color/blue_multiplier"
+        "/sys/devices/virtual/misc/color_tuning/red_multiplier",
+        "/sys/devices/virtual/misc/color_tuning/green_multiplier",
+        "/sys/devices/virtual/misc/color_tuning/blue_multiplier"
     };
 
     public static boolean isSupported() {
