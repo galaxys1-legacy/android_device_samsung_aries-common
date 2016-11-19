@@ -47,8 +47,7 @@ static void onRequestShim(int request, void *data, size_t datalen, RIL_Token t)
 			if (data != NULL) {
 				/* The RIL requires the type to be RADIO_TECH_GPRS (1), as v3 specs state 0 (CDMA) or 1 (GSM) */
 				char **pStrings = (char **)data;
-
-				pStrings[0][0] = '1';
+                                pStrings[0][0] = '1';
 
 				RLOGD("%s: got request %s: overriding Radio Technology\n", __func__, requestToString(request));
 				origRilFunctions->onRequest(request, pStrings, datalen, t);
@@ -67,19 +66,13 @@ static void onRequestShim(int request, void *data, size_t datalen, RIL_Token t)
 		/* Necessary; RILJ may fake this for us if we reply not supported, but we can just implement it. */
 		case RIL_REQUEST_GET_RADIO_CAPABILITY:
 			; /* lol C standard */
-			int raf;
-			if (ariesVariant == VARIANT_GALAXYS4G) {
-				raf = RAF_GSM | RAF_GPRS | RAF_EDGE | RAF_HSUPA | RAF_HSDPA | RAF_HSPA | RAF_HSPAP | RAF_UMTS;
-			} else {
-				raf = RAF_GSM | RAF_GPRS | RAF_EDGE | RAF_HSUPA | RAF_HSDPA | RAF_HSPA | RAF_UMTS;
-			}
 			RIL_RadioCapability rc[1] =
 			{
 				{ /* rc[0] */
 					RIL_RADIO_CAPABILITY_VERSION, /* version */
 					0, /* session */
 					RC_PHASE_CONFIGURED, /* phase */
-					raf, /* rat */
+					RAF_GSM | RAF_GPRS | RAF_EDGE | RAF_HSUPA | RAF_HSDPA | RAF_HSPA | RAF_UMTS, /* rat */
 					{ /* logicalModemUuid */
 						0,
 					},
@@ -206,7 +199,7 @@ static void onRequestCompleteShim(RIL_Token t, RIL_Errno e, void *response, size
 			}
 			break;
 		case RIL_REQUEST_GET_PREFERRED_NETWORK_TYPE:
-			if (response!= NULL) {
+			if (response != NULL) {
 				int *p_int = (int *) response;
 				if (p_int[0] == PREF_NET_TYPE_GSM_WCDMA_CDMA_EVDO_AUTO) {
 					RLOGD("%s: NETWORK_MODE_GLOBAL => NETWORK_MODE_WCDMA_PREF\n", __func__);
