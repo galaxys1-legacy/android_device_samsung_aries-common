@@ -822,8 +822,6 @@ void CameraHardwareSec::releaseRecordingFrame(const void *opaque)
 {
     struct addrs *addrs = (struct addrs *)opaque;
     mSecCamera->releaseRecordFrame(addrs->pHandle->data[2]);
-    native_handle_close(addrs->pHandle);
-    native_handle_delete(addrs->pHandle);
 }
 
 // ---------------------------------------------------------------------------
