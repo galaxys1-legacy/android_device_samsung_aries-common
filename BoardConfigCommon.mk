@@ -39,6 +39,9 @@ KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-ea
 
 BOARD_SEPOLICY_DIRS += \
     device/samsung/aries-common/sepolicy
+ifneq (galaxys4gmtd, $(TARGET_DEVICE))
+    BOARD_SEPOLICY_DIRS += device/samsung/aries-common/sepolicy-lvm
+endif
 
 # Bionic stuff
 TARGET_USERIMAGES_USE_YAFFS := true
