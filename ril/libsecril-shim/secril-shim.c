@@ -198,11 +198,18 @@ static void onRequestCompleteShim(RIL_Token t, RIL_Errno e, void *response, size
 				int *p_int = (int *) response;
 				if (p_int[0] == PREF_NET_TYPE_GSM_WCDMA_CDMA_EVDO_AUTO) {
 					RLOGD("%s: NETWORK_MODE_GLOBAL => NETWORK_MODE_WCDMA_PREF\n", __func__);
-					p_int[0] = PREF_NET_TYPE_GSM_WCDMA;
+					p_int[0] = PREF_NET_TYPE_GSM_ONLY;
 					rilEnv->OnRequestComplete(t, e, p_int, responselen);
 					return;
 				}
-			}
+				
+				else{
+                                        RLOGD("%s: NETWORK_MODE_GLOBAL => NETWORK_MODE_WCDMA_PREF\n", __func__);
+					p_int[0] = PREF_NET_TYPE_GSM_ONLY;
+					rilEnv->OnRequestComplete(t, e, p_int, responselen);
+					return;
+                                    
+                                }
 			break;
 	}
 
