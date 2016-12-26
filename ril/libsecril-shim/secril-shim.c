@@ -47,7 +47,8 @@ static void onRequestShim(int request, void *data, size_t datalen, RIL_Token t)
 			if (data != NULL) {
 				/* The RIL requires the type to be RADIO_TECH_GPRS (1), as v3 specs state 0 (CDMA) or 1 (GSM) */
 				char **pStrings = (char **)data;
-                                pStrings[0][0] = '1';
+
+				pStrings[0][0] = '1';
 
 				RLOGD("%s: got request %s: overriding Radio Technology\n", __func__, requestToString(request));
 				origRilFunctions->onRequest(request, pStrings, datalen, t);
@@ -66,13 +67,19 @@ static void onRequestShim(int request, void *data, size_t datalen, RIL_Token t)
 		/* Necessary; RILJ may fake this for us if we reply not supported, but we can just implement it. */
 		case RIL_REQUEST_GET_RADIO_CAPABILITY:
 			; /* lol C standard */
+			int raf;
+			if (ariesVariant == VARIANT_GALAXYS4G) {
+				raf = RAF_GSM | RAF_GPRS | RAF_EDGE | RAF_HSUPA | RAF_HSDPA | RAF_HSPA | RAF_HSPAP | RAF_UMTS;
+			} else {
+				raf = RAF_GSM | RAF_GPRS | RAF_EDGE | RAF_HSUPA | RAF_HSDPA | RAF_HSPA | RAF_UMTS;
+			}
 			RIL_RadioCapability rc[1] =
 			{
 				{ /* rc[0] */
 					RIL_RADIO_CAPABILITY_VERSION, /* version */
 					0, /* session */
 					RC_PHASE_CONFIGURED, /* phase */
-					RAF_GSM | RAF_GPRS | RAF_EDGE | RAF_HSUPA | RAF_HSDPA | RAF_HSPA | RAF_UMTS, /* rat */
+					raf, /* rat */
 					{ /* logicalModemUuid */
 						0,
 					},
@@ -194,11 +201,11 @@ static void onRequestCompleteShim(RIL_Token t, RIL_Errno e, void *response, size
 			}
 			break;
 		case RIL_REQUEST_GET_PREFERRED_NETWORK_TYPE:
-			if (response != NULL) {
+			if (response!= NULL) {
 				int *p_int = (int *) response;
 				if (p_int[0] == PREF_NET_TYPE_GSM_WCDMA_CDMA_EVDO_AUTO) {
 					RLOGD("%s: NETWORK_MODE_GLOBAL => NETWORK_MODE_WCDMA_PREF\n", __func__);
-					p_int[0] = PREF_NET_TYPE_GSM_WCDMA;
+					p_int[0] = PREF_NET_TYPE_GSM_ONLY;
 					rilEnv->OnRequestComplete(t, e, p_int, responselen);
 					return;
 				}
@@ -239,25 +246,12 @@ static void onUnsolicitedResponseShim(int unsolResponse, const void *data, size_
 				fixupSignalStrength((void*) data, datalen);
 			break;
 
-		case RIL_UNSOL_AM:
-		{
-			/* This sends an "am" command for broadcasts, etc */
-			char *amArgs = (char*) data;
-
-			/* 3 is the length of "am ", 106 is longest broadcast in libsec-ril.so */
-			char command[109];
-			strcpy(command, "am ");
-			strcat(command, amArgs);
-
-			RLOGD("%s: got unsol response UNSOL_AM: running %s\n", __func__, command);
-
-			int amReturn = system(command);
-			RLOGD("%s: UNSOL_AM: am returned %d\n", __func__, amReturn);
+		default:
+		if (unsolResponse > 11000) {
+			/* Samsung-specific call, log only */
+			RLOGD("%s: got samsung unsol response %d: logging only\n", __func__, unsolResponse);
 			return;
 		}
-		case RIL_UNSOL_HSDPA_STATE_CHANGED:
-			RLOGD("%s: UNSOL_HSDPA_STATE_CHANGED: logging only\n", __func__);
-			return;
 	}
 
 	RLOGD("%s: got unsol response %s: forwarded to libril.\n", __func__, requestToString(unsolResponse));
