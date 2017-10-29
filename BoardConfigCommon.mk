@@ -23,75 +23,31 @@ AUDIO_FEATURE_ENABLED_INCALL_MUSIC := false
 AUDIO_FEATURE_ENABLED_COMPRESS_VOIP := false
 
 
-# Disable SELinux
+
 TARGET_ARCH := arm
-TARGET_CPU_ABI := armeabi-v7a
-TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_ARCH_VARIANT_CPU := cortex-a8
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a8
-TARGET_BOARD_CFLAGS += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
-TARGET_BOARD_CPPFLAGS += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
+
+#TARGET_BOARD_CFLAGS += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
+#TARGET_BOARD_CPPFLAGS += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
+
 KERNEL_TOOLCHAIN_PREFIX := arm-eabi-
 KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-eabi-6.x/bin
 
 # BOARD_KERNEL_CMDLINE := androidboot.selinux=disabled
 
-BOARD_SEPOLICY_DIRS += \
-    device/samsung/aries-common/sepolicy
-ifneq (galaxys4gmtd, $(TARGET_DEVICE))
-    BOARD_SEPOLICY_DIRS += device/samsung/aries-common/sepolicy-lvm
-endif
-
-# Bionic stuff
-TARGET_USERIMAGES_USE_YAFFS := true
-BOARD_USES_LEGACY_MMAP := true
-MALLOC_SVELTE := true
-TARGET_ENABLE_NON_PIE_SUPPORT := true
-LIBART_IMG_BASE := 0x30000000
-TARGET_USERIMAGES_USE_YAFFS := true
-TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
-
-# Don't include live wallpapers, they take too much cpu and ram plus space
-TARGET_EXCLUDE_LIVEWALLPAPERS := true
-
-# CMHW
-BOARD_HARDWARE_CLASS := device/samsung/aries-common/cmhw
+# Kernel Source
+TARGET_KERNEL_SOURCE := kernel/samsung/aries
 
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
 TARGET_BOARD_PLATFORM := s5pc110
 TARGET_BOOTLOADER_BOARD_NAME := aries
-
-# Kernel Source
-TARGET_KERNEL_SOURCE := kernel/samsung/aries
-
-# Releasetools
-TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/aries-common
-
-# Browser
-TARGET_USES_AOSP_BROWSER := true
-
-# Camera
-USE_CAMERA_STUB := false
-ifeq ($(USE_CAMERA_STUB),false)
-BOARD_CAMERA_LIBRARIES := libcamera
-endif
-BOARD_CAMERA_HAVE_ISO := true
-
-# Bluetooth
-BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_BCM := true
-
-# RIL
-BOARD_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
-TARGET_NEEDS_ROOT_RIL_INIT := true
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/aries-common/include
-
-# Video Devices
-BOARD_V4L2_DEVICE := /dev/video1
-BOARD_CAMERA_DEVICE := /dev/video0
+TARGET_USERIMAGES_USE_YAFFS := true
 
 BOARD_NAND_PAGE_SIZE := 4096
 BOARD_NAND_SPARE_SIZE := 128
@@ -106,6 +62,32 @@ BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := yaffs2
 BOARD_IMAGE_PARTITION_SIZE := 1379926016
 BOARD_FLASH_BLOCK_SIZE := 4096
 
+
+# Bionic stuff
+BOARD_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
+BOARD_USES_LEGACY_MMAP := true
+MALLOC_SVELTE := true
+TARGET_ENABLE_NON_PIE_SUPPORT := true
+LIBART_IMG_BASE := 0x30000000
+TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
+
+# Bluetooth
+BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_BCM := true
+BOARD_CUSTOM_BT_CONFIG := device/samsung/aries-common/config/libbt_vndcfg.txt
+
+# Camera
+BOARD_CAMERA_DEVICE := /dev/video0
+BOARD_CAMERA_HAVE_ISO := true
+BOARD_V4L2_DEVICE := /dev/video1
+USE_CAMERA_STUB := false
+ifeq ($(USE_CAMERA_STUB),false)
+BOARD_CAMERA_LIBRARIES := libcamera
+endif
+
+# Charger
+BOARD_CHARGER_ENABLE_SUSPEND := true
+
 # Connectivity - Wi-Fi
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
@@ -117,15 +99,14 @@ WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
 
-# Bluetooth
-BOARD_CUSTOM_BT_CONFIG := device/samsung/aries-common/config/libbt_vndcfg.txt
-
 # Vold
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/s3c-usbgadget/gadget/lun%d/file"
 BOARD_USES_MULTIPLE_SDCARD_FS := true
 BLOCK_BASED_OTA=false
 
+
+# Don't include live wallpapers, they take too much cpu and ram plus space
 TARGET_EXCLUDE_LIVEWALLPAPERS := true
 
 # Enable dex-preoptimization to speed up first boot sequence
@@ -135,22 +116,15 @@ ifeq ($(HOST_OS),linux)
     DONT_DEXPREOPT_PREBUILTS := true
 endif
 
-# Recovery
-TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
-TARGET_KERNEL_HAVE_EXFAT := true
-BOARD_USES_BML_OVER_MTD := true
-BOARD_CUSTOM_BOOTIMG := true
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/aries-common/shbootimg.mk
-BOARD_CUSTOM_MKBOOTIMG := device/samsung/aries-common/mksgsbootimg/Android.mk
-TARGET_RECOVERY_FSTAB := device/samsung/aries-common/rootdir/fstab.aries
-RECOVERY_FSTAB_VERSION := 2
+# OpenGL
+BOARD_ALLOW_EGL_HIBERNATION := true
+BOARD_CUSTOM_VSYNC_IOCTL := true
+BOARD_EGL_WORKAROUND_BUG_10194508 := true
+BOARD_EGL_NEEDS_HANDLE_VALUE=true
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # Increase coldboot timeout
 TARGET_INCREASES_COLDBOOT_TIMEOUT := true
-
-# Open Source Charging Mode
-BOARD_CHARGER_ENABLE_SUSPEND := true
 
 # Boot Animation
 TARGET_BOOTANIMATION_TEXTURE_CACHE := false
@@ -168,6 +142,10 @@ BOARD_EGL_SYSTEMUI_PBSIZE_HACK := true
 
 # OMX buffer reallocate
 BOARD_CANT_REALLOCATE_OMX_BUFFERS := true
+BOARD_SCREENRECORD_LANDSCAPE_ONLY := true
+
+# Releasetools
+TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/aries-common
 
 # TARGET_DISABLE_TRIPLE_BUFFERING can be used to disable triple buffering
 # on per target basis. On crespo it is possible to do so in theory
@@ -176,16 +154,32 @@ BOARD_CANT_REALLOCATE_OMX_BUFFERS := true
 # would hurt performance significantly (see b/6016711)
 TARGET_DISABLE_TRIPLE_BUFFERING := false
 
-BOARD_ALLOW_EGL_HIBERNATION := true
-BOARD_EGL_WORKAROUND_BUG_10194508 := true
-BOARD_EGL_NEEDS_HANDLE_VALUE=true
-TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
+# RIL
+TARGET_NEEDS_ROOT_RIL_INIT := true
+TARGET_SPECIFIC_HEADER_PATH := device/samsung/aries-common/include
 
-# hwcomposer: custom vsync ioctl
-BOARD_CUSTOM_VSYNC_IOCTL := true
+# Recovery
+BOARD_USES_BML_OVER_MTD := true
+BOARD_CUSTOM_MKBOOTIMG := mksgsbootimg
+RECOVERY_FSTAB_VERSION := 2
+TARGET_RECOVERY_FSTAB := device/samsung/aries-common/rootdir/fstab.aries
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
+TARGET_KERNEL_HAVE_EXFAT := true
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/s3c-usbgadget/gadget/lun%d/file"
+
+# SELinux
+BOARD_SEPOLICY_DIRS += \
+    device/samsung/aries-common/sepolicy
+ifneq (galaxys4gmtd, $(TARGET_DEVICE))
+    BOARD_SEPOLICY_DIRS += device/samsung/aries-common/sepolicy-lvm
+endif
 
 # Include aries specific stuff
 -include device/samsung/aries-common/Android.mk
+
+# CMHW
+BOARD_HARDWARE_CLASS := device/samsung/aries-common/cmhw
 
 # TWRP Flags
 TW_THEME := portrait_mdpi
@@ -199,8 +193,6 @@ TW_FLASH_FROM_STORAGE := true
 TW_EXCLUDE_SUPERSU := true
 TW_NO_PARTITION_SD_CARD := true
 TW_INCLUDE_FB2PNG := true
-TW_INCLUDE_JB_CRYPTO := false
-TW_EXCLUDE_ENCRYPTED_BACKUPS := true
-TW_INCLUDE_L_CRYPTO := true
+TW_INCLUDE_CRYPTO := true
 TW_MAX_BRIGHTNESS := 255
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/s5p_bl/brightness"
