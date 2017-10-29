@@ -17,11 +17,13 @@
 #ifndef ANDROID_ORIEN_SENSOR_H
 #define ANDROID_ORIEN_SENSOR_H
 
+#include <cstring>
+
 #include <stdint.h>
 #include <errno.h>
 #include <sys/cdefs.h>
 #include <sys/types.h>
-#include <cstring>
+
 
 #include "sensors.h"
 #include "SensorBase.h"

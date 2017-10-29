@@ -50,6 +50,7 @@
  *
  * Result: GPS library works on M, with the help of libdmitry and a small binary patch to the GPS
  *         library itself (replacing one of the "NEED" records with a NEED record for "libdmitry"
+ *         In our case, we replace libcutils with libdmitry
  */
 
 

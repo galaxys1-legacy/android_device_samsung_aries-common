@@ -38,7 +38,7 @@
 # These is the hardware-specific overlay, which points to the location
 # of hardware-specific resource overrides, typically the frameworks and
 # application settings that are stored in resourced.
-DEVICE_PACKAGE_OVERLAYS := device/samsung/aries-common/overlay
+DEVICE_PACKAGE_OVERLAYS += device/samsung/aries-common/overlay
 
 # Init files
 PRODUCT_COPY_FILES += \
@@ -49,38 +49,26 @@ PRODUCT_COPY_FILES += \
     device/samsung/aries-common/rootdir/init.recovery.aries.rc:root/init.recovery.aries.rc \
     device/samsung/aries-common/rootdir/init.aries.usb.rc:recovery/root/usb.rc \
     device/samsung/aries-common/rootdir/fstab.aries:root/fstab.aries \
-    device/samsung/aries-common/rootdir/ueventd.aries.rc:root/ueventd.aries.rc \
+    device/samsung/aries-common/recovery/twrp.fstab:recovery/root/etc/twrp.fstab \
+    device/samsung/aries-common/rootdir/ueventd.aries.rc:root/ueventd.aries.rc
+
+# Shell scripts
+PRODUCT_COPY_FILES += \
     device/samsung/aries-common/bml_over_mtd.sh:bml_over_mtd.sh \
-    device/samsung/aries-common/updater.sh:updater.sh \
-    device/samsung/aries-common/recovery/twrp.fstab:recovery/root/etc/twrp.fstab
+    device/samsung/aries-common/updater.sh:updater.sh
 
-# Prebuilt kl and kcm keymaps
-PRODUCT_COPY_FILES += \
-    device/samsung/aries-common/config/cypress-touchkey.kl:system/usr/keylayout/cypress-touchkey.kl \
-    device/samsung/aries-common/config/cypress-touchkey.kcm:system/usr/keychars/cypress-touchkey.kcm \
-    device/samsung/aries-common/config/sec_jack.kl:system/usr/keylayout/sec_jack.kl \
-    device/samsung/aries-common/config/sec_jack.kcm:system/usr/keychars/sec_jack.kcm \
-    device/samsung/aries-common/config/s3c-keypad.kl:system/usr/keylayout/s3c-keypad.kl \
-    device/samsung/aries-common/config/s3c-keypad.kcm:system/usr/keychars/s3c-keypad.kcm
-
-# Prebuilt static utilities (for updater.sh)
-PRODUCT_COPY_FILES += \
-    device/samsung/aries-common/utilities/busybox:recovery/root/sbin/busybox-M \
-    device/samsung/aries-common/utilities/bml_over_mtd:utilities/bml_over_mtd \
-    device/samsung/aries-common/utilities/busybox:utilities/busybox \
-    device/samsung/aries-common/utilities/erase_image:utilities/erase_image \
-    device/samsung/aries-common/utilities/flash_image:utilities/flash_image \
-    device/samsung/aries-common/utilities/make_ext4fs:utilities/make_ext4fs
+# Static executables for updater.sh
+PRODUCT_PACKAGES += \
+    bml_over_mtd \
+    setup_fs \
+    static_busybox \
+    utility_erase_image \
+    utility_flash_image \
+    utility_make_ext4fs
 
 # Input device calibration files
 PRODUCT_COPY_FILES += \
     device/samsung/aries-common/config/mxt224_ts_input.idc:system/usr/idc/mxt224_ts_input.idc
-
-# Legacy RIL
-PRODUCT_PACKAGES += \
-   libsamsung_symbols \
-   libsecril-client \
-   libsecril-shim
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -91,63 +79,42 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
-# These are the OpenMAX IL configuration files
+# OpenMAX IL configuration files
 PRODUCT_COPY_FILES += \
-    hardware/samsung/exynos3/s5pc110/sec_mm/sec_omx/sec_omx_core/secomxregistry:system/etc/secomxregistry \
     device/samsung/aries-common/config/media_profiles.xml:system/etc/media_profiles.xml \
     device/samsung/aries-common/config/media_codecs.xml:system/etc/media_codecs.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml
+    frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video.xml \
+    hardware/samsung/exynos3/s5pc110/sec_mm/sec_omx/sec_omx_core/secomxregistry:system/etc/secomxregistry
 
-# We need to build the GPS interposition library for the GPS to work, also M removes
-# libstlport, but some of our binary-only prebuilts need it, so we'll add it back in
-# in source and here
-PRODUCT_PACKAGES += \
-    libdmitry \
-    libstlport
+# Prebuilt kl and kcm keymaps
+PRODUCT_COPY_FILES += \
+    device/samsung/aries-common/config/cypress-touchkey.kl:system/usr/keylayout/cypress-touchkey.kl \
+    device/samsung/aries-common/config/cypress-touchkey.kcm:system/usr/keychars/cypress-touchkey.kcm \
+    device/samsung/aries-common/config/sec_jack.kcm:system/usr/keychars/sec_jack.kcm \
+    device/samsung/aries-common/config/sec_jack.kl:system/usr/keylayout/sec_jack.kl \
+    device/samsung/aries-common/config/s3c-keypad.kcm:system/usr/keychars/s3c-keypad.kcm \
+    device/samsung/aries-common/config/s3c-keypad.kl:system/usr/keylayout/s3c-keypad.kl
 
-# These are the OpenMAX IL modules
+# Bluetooth MAC Address
 PRODUCT_PACKAGES += \
-    libSEC_OMX_Core \
-    libOMX.SEC.AVC.Decoder \
-    libOMX.SEC.M4V.Decoder \
-    libOMX.SEC.M4V.Encoder \
-    libOMX.SEC.AVC.Encoder
-
-# Misc other modules
-PRODUCT_PACKAGES += \
-    lights.aries \
-    sensors.aries \
-    power.s5pc110 \
-    hwcomposer.s5pc110 \
-    audio.primary.aries \
-    audio.a2dp.default \
-    audio.usb.default \
-    libs3cjpeg
+    bdaddr_read
 
 # Camera
 PRODUCT_PACKAGES += \
-    Snap \
     camera.aries
 
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images
 
-# Wi-Fi
+# Device-specific packages
 PRODUCT_PACKAGES += \
-    libwpa_client \
-    hostapd \
-    hostapd_default.conf \
-    dhcpcd.conf \
-    wpa_supplicant \
-    wpa_supplicant.conf
+    SamsungServiceMode \
+    DeviceSettings
 
-# PVR
-PRODUCT_PACKAGES += \
-    pvrsrvinit
-
+# Audio
 PRODUCT_COPY_FILES += \
     device/samsung/aries-common/config/audio_policy.conf:system/etc/audio_policy.conf \
     device/samsung/aries-common/config/audio_effects.conf:system/vendor/etc/audio_effects.conf
@@ -156,14 +123,25 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libstagefrighthw
 
-# Bluetooth MAC Address
+# Misc other modules
 PRODUCT_PACKAGES += \
-    bdaddr_read
+    audio.primary.aries \
+    audio.a2dp.default \
+    audio.usb.default \
+    camera.aries \
+    hwcomposer.s5pc110 \
+    libs3cjpeg \
+    lights.aries \
+    power.s5pc110 \
+    sensors.aries
 
-# Device-specific packages
+# OpenMAX IL modules
 PRODUCT_PACKAGES += \
-    SamsungServiceMode \
-    DeviceSettings
+    libSEC_OMX_Core \
+    libOMX.SEC.AVC.Decoder \
+    libOMX.SEC.AVC.Encoder \
+    libOMX.SEC.M4V.Decoder \
+    libOMX.SEC.M4V.Encoder
 
 # Libnetcmd
 PRODUCT_PACKAGES += \
@@ -175,9 +153,40 @@ PRODUCT_PACKAGES += \
     mkfs.f2fs \
     fibmap.f2fs
 
+# PVR
+PRODUCT_PACKAGES += \
+    libEGL_POWERVR \
+    pvrsrvinit
+
+# GPS Shims
+PRODUCT_PACKAGES += \
+    libdmitry \
+    libstegps
+
+# Support for Browser's saved page feature. This allows
+# for pages saved on previous versions of the OS to be
+# viewed on the current OS.
+PRODUCT_PACKAGES += \
+    libskia_legacy
+
+
+# Legacy RIL
+PRODUCT_PACKAGES += \
+    libsecril-client \
+    libsecril-compat \
+    libsecril-shim
+
+# Wi-Fi
+PRODUCT_PACKAGES += \
+    libwpa_client \
+    hostapd \
+    hostapd_default.conf \
+    dhcpcd.conf \
+    wpa_supplicant \
+    wpa_supplicant.conf
+
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/native/data/etc/android.hardware.location.xml:system/etc/permissions/android.hardware.location.xml \
@@ -187,28 +196,9 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
     frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
+    frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
-    frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml
-
-# The OpenGL ES API level that is natively supported by this device.
-# This is a 16.16 fixed point number
-PRODUCT_PROPERTY_OVERRIDES += \
-    debug.hwui.render_dirty_regions=false \
-    ro.hwui.r_buffer_cache_size=1 \
-    ro.hwui.layer_cache_size=8 \
-    ro.hwui.path_cache_size=2 \
-    ro.hwui.drop_shadow_cache_size=1 \
-    ro.hwui.shape_cache_size=0.5 \
-    ro.hwui.texture_cache_size=12 \
-    ro.opengles.version=131072 \
-    ro.zygote.disable_gl_preload=true
-
-
-# Support for Browser's saved page feature. This allows
-# for pages saved on previous versions of the OS to be
-# viewed on the current OS.
-PRODUCT_PACKAGES += \
-    libskia_legacy
+    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to
@@ -220,10 +210,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.bq.gpu_to_cpu_unsupported=1 \
     ro.ril.hsxpa=1 \
     ro.ril.gprsclass=10 \
-    ro.adb.qemud=1 \
     ro.config.low_ram=true \
-    ro.sys.fw.bg_apps_limit=16 \
-    ro.config.max_starting_bg=10 \
+    ro.sys.fw.bg_apps_limit=8 \
     ro.ksm.default=1
 
 # ART
@@ -249,7 +237,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.google.locationfeatures=1 \
     ro.com.google.networklocation=1
 
-# SELinux
+# SELinux status in Settings
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.build.selinux=1
 
@@ -266,6 +254,22 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.strictmode.disable=1 \
     persist.sys.strictmode.visual=0
+
+# OpenGL
+    debug.hwui.render_dirty_regions=false \
+    ro.hwui.r_buffer_cache_size=1 \
+    ro.hwui.layer_cache_size=8 \
+    ro.hwui.path_cache_size=2 \
+    ro.hwui.drop_shadow_cache_size=1 \
+    ro.hwui.shape_cache_size=0.5 \
+    ro.hwui.texture_cache_size=12 \
+    ro.opengles.version=131072 \
+    ro.zygote.disable_gl_preload=true
+
+# System server
+PRODUCT_PROPERTY_OVERRIDES += \
+    config.disable_atlas=true \
+    config.disable_samplingprof=true
 
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 
