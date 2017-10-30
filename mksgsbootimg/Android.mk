@@ -3,7 +3,7 @@ LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := mksgsbootimg.c
-LOCAL_STATIC_LIBRARIES := libmincrypt
+LOCAL_STATIC_LIBRARIES := libconstrainedcrypto
 LOCAL_CFLAGS := -Werror
 
 LOCAL_MODULE := mksgsbootimg
