@@ -196,3 +196,6 @@ TW_INCLUDE_FB2PNG := true
 TW_INCLUDE_CRYPTO := true
 TW_MAX_BRIGHTNESS := 255
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/s5p_bl/brightness"
+
+# Lineage
+WITHOUT_CHECK_API := true
