@@ -58,7 +58,6 @@ BOARD_BOOTIMAGE_PARTITION_SIZE := 7864320
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 943718400
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 1379926016
 BOARD_CACHEIMAGE_PARTITION_SIZE :=  17920
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := yaffs2
 BOARD_IMAGE_PARTITION_SIZE := 1379926016
 BOARD_FLASH_BLOCK_SIZE := 4096
 
@@ -156,7 +155,7 @@ TARGET_DISABLE_TRIPLE_BUFFERING := false
 
 # RIL
 TARGET_NEEDS_ROOT_RIL_INIT := true
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/aries-common/include
+# TARGET_SPECIFIC_HEADER_PATH := device/samsung/aries-common/include
 
 # Recovery
 BOARD_USES_BML_OVER_MTD := true
@@ -179,7 +178,7 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/s3c-usbgadget/gadget/l
 -include device/samsung/aries-common/Android.mk
 
 # CMHW
-BOARD_HARDWARE_CLASS := device/samsung/aries-common/cmhw
+# BOARD_HARDWARE_CLASS := device/samsung/aries-common/cmhw
 
 # TWRP Flags
 TW_THEME := portrait_mdpi
