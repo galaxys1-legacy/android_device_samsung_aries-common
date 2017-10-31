@@ -57,7 +57,15 @@ PRODUCT_COPY_FILES += \
     device/samsung/aries-common/bml_over_mtd.sh:bml_over_mtd.sh \
     device/samsung/aries-common/updater.sh:updater.sh
 
-# Static executables for updater.sh
+# Prebuilt static utilities (for updater.sh)
+PRODUCT_COPY_FILES += \
+    device/samsung/aries-common/utilities/bml_over_mtd:utilities/bml_over_mtd \
+    device/samsung/aries-common/utilities/busybox:utilities/busybox \
+    device/samsung/aries-common/utilities/erase_image:utilities/erase_image \
+    device/samsung/aries-common/utilities/erase_image:utilities/flash_image \
+	device/samsung/aries-common/utilities/make_ext4fs:utilities/make_ext4fs
+
+# Filesystem management tools
 PRODUCT_PACKAGES += \
     bml_over_mtd \
     setup_fs \
@@ -70,10 +78,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/samsung/aries-common/config/mxt224_ts_input.idc:system/usr/idc/mxt224_ts_input.idc
 
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-    setup_fs \
-    bml_over_mtd
 
 # Usb accessory
 PRODUCT_PACKAGES += \
