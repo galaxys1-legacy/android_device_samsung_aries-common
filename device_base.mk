@@ -101,9 +101,10 @@ PRODUCT_COPY_FILES += \
     device/samsung/aries-common/config/s3c-keypad.kcm:system/usr/keychars/s3c-keypad.kcm \
     device/samsung/aries-common/config/s3c-keypad.kl:system/usr/keylayout/s3c-keypad.kl
 
-# Bluetooth MAC Address
+# Bluetooth
 PRODUCT_PACKAGES += \
-    bdaddr_read
+    bdaddr_read \
+    libbt-vendor
 
 # Camera
 PRODUCT_PACKAGES += \
@@ -273,6 +274,20 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     config.disable_atlas=true \
     config.disable_samplingprof=true
+
+# HIDL
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/manifest.xml:system/vendor/manifest.xml
+
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-impl \
+    android.hardware.audio@2.0-impl \
+    android.hardware.audio.effect@2.0-impl \
+    android.hardware.camera.provider@2.4-impl \
+    android.hardware.sensors@1.0-impl \
+    android.hardware.power@1.0-impl \
+    android.hardware.light@2.0-impl \
+	android.hardware.bluetooth@1.0-impl
 
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 
