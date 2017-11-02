@@ -106,6 +106,11 @@ PRODUCT_PACKAGES += \
     bdaddr_read \
     libbt-vendor
 
+# Wifi
+PRODUCT_PACKAGES += \
+    android.hardware.wifi@1.0-service \
+    wificond \
+
 # Camera
 PRODUCT_PACKAGES += \
     camera.aries
