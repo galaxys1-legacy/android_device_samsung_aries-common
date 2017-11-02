@@ -1,6 +1,6 @@
 # Bluetooth HAL
 PRODUCT_PACKAGES += \
-	android.hardware.bluetooth@1.0-impl \
+    android.hardware.bluetooth@1.0-impl \
     bdaddr_read \
     libbt-vendor
 
@@ -69,3 +69,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl \
     sensors.aries
+
+# Vibrator
+PRODUCT_PACKAGES += \
+	android.hardware.vibrator@1.0-impl
+
+# GPS HAL
+# PRODUCT_PACKAGES += \
+#     android.hardware.gnss@1.0-impl
