@@ -180,6 +180,8 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/s3c-usbgadget/gadget/l
 # CMHW
 # BOARD_HARDWARE_CLASS := device/samsung/aries-common/cmhw
 
+DEVICE_MANIFEST_FILE := device/samsung/aries-common/manifest.xml
+
 # TWRP Flags
 TW_THEME := portrait_mdpi
 TW_NO_REBOOT_BOOTLOADER := true
