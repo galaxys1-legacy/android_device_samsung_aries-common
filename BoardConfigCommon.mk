@@ -35,8 +35,9 @@ TARGET_CPU_VARIANT := cortex-a8
 #TARGET_BOARD_CPPFLAGS += -mtune=cortex-a8 -mfpu=neon -mfloat-abi=softfp
 
 KERNEL_TOOLCHAIN_PREFIX := arm-eabi-
+ifeq ($(KERNEL_TOOLCHAIN),)
 KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-eabi-6.x/bin
-
+endif
 # BOARD_KERNEL_CMDLINE := androidboot.selinux=disabled
 
 # Kernel Source
