@@ -278,6 +278,9 @@ private:
         virtual status_t setParameters(const String8& keyValuePairs);
         virtual String8 getParameters(const String8& keys);
         uint32_t device() { return mDevices; }
+        virtual status_t    getPresentationPosition(uint64_t *frames, struct timespec *timestamp) {
+            return 0;
+        }
         virtual status_t getRenderPosition(uint32_t *dspFrames);
 
                 void doStandby_l();
