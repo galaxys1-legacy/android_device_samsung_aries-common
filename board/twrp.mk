@@ -1,0 +1,15 @@
+# TWRP Flags
+TW_THEME := portrait_mdpi
+TW_NO_REBOOT_BOOTLOADER := true
+TW_EXCLUDE_MTP := true
+TW_INTERNAL_STORAGE_PATH := "/sdcard"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+TW_FLASH_FROM_STORAGE := true
+TW_EXCLUDE_SUPERSU := true
+TW_NO_PARTITION_SD_CARD := true
+TW_INCLUDE_FB2PNG := true
+TW_INCLUDE_CRYPTO := true
+TW_MAX_BRIGHTNESS := 255
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/s5p_bl/brightness"
