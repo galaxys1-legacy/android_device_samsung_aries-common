@@ -16,8 +16,8 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:sharedUserId="android.uid.system"
-    package="com.cyanogenmod.settings.device">
+    package="com.cyanogenmod.settings.device"
+    android:sharedUserId="android.uid.system" >
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -25,18 +25,21 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
     <uses-permission android:name="cyanogenmod.permission.HARDWARE_ABSTRACTION_ACCESS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <protected-broadcast android:name="org.omnirom.SamsungServiceMode.EXECUTE" />
 
-    <uses-sdk
-        android:minSdkVersion="21"
-        android:targetSdkVersion="23" />
+  <application
+        android:allowBackup="true"
+        android:label="@string/device_settings_app_name"
+        android:persistent="true">
 
-    <application
-        android:label="@string/app_name"
-        android:icon="@drawable/icon"
-        android:theme="@android:style/Theme.Material.Settings"
-        android:supportsRtl="true">
+  <receiver android:name="com.cyanogenmod.settings.device.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+</receiver>
 
         <activity
             android:name=".DeviceSettings"
@@ -53,12 +56,6 @@
                 android:value="com.android.settings.category.device" />
             
         </activity>
-
-        <receiver android:name=".Startup">
-            <intent-filter android:priority="100">
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
 
         <activity android:name=".WarnActivity"
             android:label="@string/generic_warning_title"
