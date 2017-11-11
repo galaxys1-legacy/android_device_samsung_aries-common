@@ -1,4 +1,6 @@
 # Copyright (C) 2010 The Android Open Source Project
+#           (C) 2017 The LineageOS Project
+#           (C) 2017 GalaxyS1 Resurrected Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,7 +39,9 @@
 
 LOCAL_PATH := device/samsung/aries-common
 
+# Include package config fragments
 include $(LOCAL_PATH)/product/*.mk
+
 
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 
