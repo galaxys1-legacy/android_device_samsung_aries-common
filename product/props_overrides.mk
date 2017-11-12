@@ -15,7 +15,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # ART
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dex2oat-flags=--no-watch-dog
+    dalvik.vm.dex2oat-flags=--no-watch-dog \
+    dalvik.vm.image-dex2oat-filter=speed \
+	dalvik.vm.dex2oat-filter=speed
 
 # Force dex2oat to not use swap file
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -24,7 +26,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Camera
 PRODUCT_PROPERTY_OVERRIDES += \
     camera2.portability.force_api=1 \
-    camera2.port.operation_time_ms=5000
+    camera2.port.operation_time_ms=5000 \
+    persist.camera.HAL3.enabled=0
 
 # SGX540 is slower with the scissor optimization enabled
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -70,3 +73,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     config.disable_atlas=true \
     config.disable_samplingprof=true
+
+# Media
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.stagefright.legacyencoder=true \
+	media.stagefright.less-secure=true
+
+# Storage
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.sys.sdcardfs=false
