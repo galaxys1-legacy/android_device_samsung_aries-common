@@ -13,6 +13,7 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
+    Snap \
     camera.aries \
     libs3cjpeg
 
