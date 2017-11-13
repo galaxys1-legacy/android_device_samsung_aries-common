@@ -10,10 +10,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libnetcmdiface
 
-# Stagefright
-PRODUCT_PACKAGES += \
-    libstagefrighthw
-
 # Support for Browser's saved page feature. This allows
 # for pages saved on previous versions of the OS to be
 # viewed on the current OS.

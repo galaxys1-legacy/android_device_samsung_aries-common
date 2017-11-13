@@ -1,5 +1,6 @@
 # OpenMAX IL modules
 PRODUCT_PACKAGES += \
+    libstagefrighthw \
     libSEC_OMX_Core \
     libOMX.SEC.AVC.Decoder \
     libOMX.SEC.AVC.Encoder \
