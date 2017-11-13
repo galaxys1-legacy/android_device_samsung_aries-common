@@ -21,7 +21,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     audio.primary.aries \
     audio.a2dp.default \
-    audio.usb.default
+    audio.usb.default \
+    audio.r_submix.default
 
 # Audio Config
 PRODUCT_COPY_FILES += \
