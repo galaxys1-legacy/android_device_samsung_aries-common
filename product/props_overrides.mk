@@ -59,6 +59,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # OpenGL
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.hwui.render_dirty_regions=false \
+    debug.hwui.swap_with_damage=false \
     ro.bq.gpu_to_cpu_unsupported=1 \
     ro.hwui.r_buffer_cache_size=1 \
     ro.hwui.layer_cache_size=8 \
