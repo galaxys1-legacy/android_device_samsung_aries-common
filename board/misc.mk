@@ -12,8 +12,7 @@ EXTENDED_FONT_FOOTPRINT := true
 
 # CMHW
 BOARD_USES_CYANOGEN_HARDWARE := true
-BOARD_HARDWARE_CLASS += hardware/cyanogen/cmhw \
-   device/samsung/aries-common/cmhw
+BOARD_HARDWARE_CLASS += device/samsung/aries-common/cmhw
  
 
 # Releasetools
